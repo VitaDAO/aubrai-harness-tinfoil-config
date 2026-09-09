@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.10.4@sha256:6d9af52ece436829555eff07a1e7cdceeef4adf6ab8539654db3d83e76bcdbbe"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.10.5@sha256:9c79b1bb1c38d92ff4449ce211031f2c4ce22a286dae27ab519e5d346dad27b4"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
@@ -43,6 +43,9 @@ containers:
       - HPKE_PRIVATE_KEY
       - HPKE_PUBLIC_KEY
       - ENCRYPTION_MASTER_KEY
+      # The previous server's Supabase project, for its read-only history (plain and private)
+      - AUBRAI_SUPABASE_URL
+      - AUBRAI_SUPABASE_SERVICE_KEY
       # Inference and research tools
       - DEEPSEEK_API_KEY
       - TINFOIL_API_KEY
