@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.09.4@sha256:829da673daf74a023d36a33ab672f8e65fe549cd19c9f9835f1ecc8e049e0bce"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.10.2@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
@@ -23,7 +23,8 @@ containers:
       - AUBRAI_STORAGE_ROOT: "/tmp/aubrai"
       - AUBRAI_KNOWLEDGE_INDEX: "/app/.data/knowledge/index.json"
       - AUBRAI_KNOWLEDGE_MANIFEST: "/app/docs/inventories/knowledge-nvidia-2026-09-08.json"
-      - AUBRAI_RUN_BUDGET: "standard"
+      # Structure-design pipelines need the extended profile to finish.
+      - AUBRAI_RUN_BUDGET: "extended"
       - ALLOWED_ORIGINS: "https://aubrai-harness-staging.vercel.app"
       # Public Privy application id (also embedded in every browser bundle).
       - PRIVY_APP_ID: "cmb5myawn00wkjm0m1o77894v"
@@ -36,6 +37,11 @@ containers:
       - DATABASE_ADMIN_URL
       - DATABASE_LOOKUP_URL
       - DATABASE_WORKER_URL
+      # Private mode: this application's own enclave identity and key-wrap secret. The
+      # unprefixed names belong to the previous Aubrai server and are deliberately not used here.
+      - HARNESS_HPKE_PRIVATE_KEY
+      - HARNESS_HPKE_PUBLIC_KEY
+      - HARNESS_ENCRYPTION_MASTER_KEY
       # Inference and research tools
       - DEEPSEEK_API_KEY
       - TINFOIL_API_KEY
