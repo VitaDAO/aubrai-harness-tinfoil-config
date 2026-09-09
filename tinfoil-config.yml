@@ -37,11 +37,12 @@ containers:
       - DATABASE_ADMIN_URL
       - DATABASE_LOOKUP_URL
       - DATABASE_WORKER_URL
-      # Private mode: this application's own enclave identity and key-wrap secret. The
-      # unprefixed names belong to the previous Aubrai server and are deliberately not used here.
-      - HARNESS_HPKE_PRIVATE_KEY
-      - HARNESS_HPKE_PUBLIC_KEY
-      - HARNESS_ENCRYPTION_MASTER_KEY
+      # Private mode. Owner's decision: this deployment shares the previous Aubrai server's
+      # enclave identity and key-wrap secret so it can read that server's encrypted history.
+      # The consequence is deliberate: a compromise here reaches that data too.
+      - HPKE_PRIVATE_KEY
+      - HPKE_PUBLIC_KEY
+      - ENCRYPTION_MASTER_KEY
       # Inference and research tools
       - DEEPSEEK_API_KEY
       - TINFOIL_API_KEY
