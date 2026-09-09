@@ -1,0 +1,50 @@
+# Tinfoil container configuration — Aubrai harness (staging)
+#
+# Copy of record lives in the public config repo VitaDAO/aubrai-harness-tinfoil-config, which is
+# the attestation anchor: the image digest below is pinned by the deploy runbook, never by hand
+# during a review. Secrets are referenced by organization-vault name only.
+
+cvm-version: 0.7.5
+cpus: 2
+memory: 8192
+
+containers:
+  - name: aubrai
+    # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v0.0.0@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    registry:
+      username: DobrinAlexandru
+      password_secret: GHCR_TOKEN
+    env:
+      # Non-sensitive configuration (apps/server/src/env.ts is the contract).
+      - NODE_ENV: "production"
+      - HOST: "0.0.0.0"
+      - PORT: "3000"
+      - AUBRAI_STORAGE_ROOT: "/tmp/aubrai"
+      - AUBRAI_KNOWLEDGE_INDEX: "/app/.data/knowledge/index.json"
+      - AUBRAI_KNOWLEDGE_MANIFEST: "/app/docs/inventories/knowledge-nvidia-2026-09-08.json"
+      - AUBRAI_RUN_BUDGET: "standard"
+      - ALLOWED_ORIGINS: "https://aubrai-harness-staging.vercel.app"
+      # Public Privy application id (also embedded in every browser bundle).
+      - PRIVY_APP_ID: "cmb5myawn00wkjm0m1o77894v"
+      - NVIDIA_MAX_COST_MICROUSD_PER_REQUEST: "250000"
+      - ANALYSIS_MAX_COST_MICROUSD: "500000"
+    secrets:
+      # Registry pull credential
+      - GHCR_TOKEN
+      # PostgreSQL over TLS: administrative (startup migrations, roles, account store) and two least-privilege roles
+      - DATABASE_ADMIN_URL
+      - DATABASE_LOOKUP_URL
+      - DATABASE_WORKER_URL
+      # Inference and research tools
+      - DEEPSEEK_API_KEY
+      - TINFOIL_API_KEY
+      - NVIDIA_API_KEY
+      - EXA_API_KEY
+
+shim:
+  upstream-port: 3000
+  paths:
+    - /health
+    - /auth/*
+    - /v1/*
