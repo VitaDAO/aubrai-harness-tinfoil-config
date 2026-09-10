@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.11.1@sha256:3ce678336552c18a3135db96804f32adf90be3f5b08816a703e96424924a0d33"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.11.2@sha256:ec9864a20675028e3be374344075c33ed64f40cdb816cf681db737d1f9e13a98"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
