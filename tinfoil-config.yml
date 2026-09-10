@@ -25,7 +25,7 @@ containers:
       - AUBRAI_KNOWLEDGE_MANIFEST: "/app/docs/inventories/knowledge-nvidia-2026-09-08.json"
       # Structure-design pipelines need the extended profile to finish.
       - AUBRAI_RUN_BUDGET: "extended"
-      - ALLOWED_ORIGINS: "https://aubrai-harness-staging.vercel.app"
+      - ALLOWED_ORIGINS: "https://staging.aubr.ai,https://aubrai-harness-staging.vercel.app"
       # Public Privy application id (also embedded in every browser bundle).
       - PRIVY_APP_ID: "cmb5myawn00wkjm0m1o77894v"
       - NVIDIA_MAX_COST_MICROUSD_PER_REQUEST: "250000"
