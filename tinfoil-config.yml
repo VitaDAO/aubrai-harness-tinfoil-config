@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.10.7@sha256:c9870761a4152d8b41abc62587cc54c95e80674be567776d249338cadcedf183"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.10.8@sha256:3cc9773c9df5a4b8cbbef0af2fdab50203040aea3813808fa6c4453ce577328f"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
@@ -30,6 +30,8 @@ containers:
       - PRIVY_APP_ID: "cmb5myawn00wkjm0m1o77894v"
       - NVIDIA_MAX_COST_MICROUSD_PER_REQUEST: "250000"
       - ANALYSIS_MAX_COST_MICROUSD: "500000"
+      # Literature discovery matches production: Firecrawl research index, read back through PubMed.
+      - LITERATURE_RETRIEVAL_PROVIDER: "firecrawl"
     secrets:
       # Registry pull credential
       - GHCR_TOKEN
@@ -51,6 +53,7 @@ containers:
       - TINFOIL_API_KEY
       - NVIDIA_API_KEY
       - EXA_API_KEY
+      - FIRECRAWL_API_KEY
 
 shim:
   upstream-port: 3000
