@@ -57,6 +57,12 @@ containers:
 
 shim:
   upstream-port: 3000
+  # Tinfoil's proxy answers CORS itself and strips the app's own header, so the app's
+  # ALLOWED_ORIGINS alone is not enforced. Listing origins here makes the proxy refuse
+  # any other browser origin (403); requests without an Origin header are unaffected.
+  origins:
+    - https://staging.aubr.ai
+    - https://aubrai-harness-staging.vercel.app
   paths:
     - /health
     - /auth/*
