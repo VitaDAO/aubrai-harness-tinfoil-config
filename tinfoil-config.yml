@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.11.2@sha256:ec9864a20675028e3be374344075c33ed64f40cdb816cf681db737d1f9e13a98"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.11.5@sha256:cc83ee5c348ff6a5de71aaeb4cdde779b50a4b0763ee31583482e5568f4dfffd"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
@@ -25,6 +25,8 @@ containers:
       - AUBRAI_KNOWLEDGE_MANIFEST: "/app/docs/inventories/knowledge-nvidia-2026-09-08.json"
       # Structure-design pipelines need the extended profile to finish.
       - AUBRAI_RUN_BUDGET: "extended"
+      # Conversations run at once across all accounts; more wait in the queue.
+      - AUBRAI_WORKER_CONCURRENCY: "6"
       - ALLOWED_ORIGINS: "https://staging.aubr.ai,https://aubrai-harness-staging.vercel.app"
       # Public Privy application id (also embedded in every browser bundle).
       - PRIVY_APP_ID: "cmb5myawn00wkjm0m1o77894v"
