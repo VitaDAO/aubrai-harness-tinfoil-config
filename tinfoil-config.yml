@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.11.8@sha256:7221cb6ecf9e4f6b36fff5d65338f3a5bcf5889e1d1f7e082ad5b56f5f34bfad"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.11.9@sha256:b675c3cf3fcb3ac210eea6237fe70963e62edbb64124206d7db19a95c04dd404"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
@@ -36,6 +36,34 @@ containers:
       - ANALYSIS_MAX_COST_MICROUSD: "500000"
       # Literature discovery matches production: Firecrawl research index, read back through PubMed.
       - LITERATURE_RETRIEVAL_PROVIDER: "firecrawl"
+      # The previous app's literature pipeline (packages/legacy-literature) with production's own settings.
+      - FAST_CHAT_LLM_PROVIDER: "cerebras"
+      - FIRECRAWL_WEB_TIMEOUT_MS: "20000"
+      - LITERATURE_BALANCED_FIRECRAWL_TIMEOUT_MS: "20000"
+      - LITERATURE_BALANCED_FIRECRAWL_NUM_RESULTS: "12"
+      - LITERATURE_BALANCED_FIRECRAWL_CONTENTS_TIMEOUT_MS: "12000"
+      - LITERATURE_BALANCED_FIRECRAWL_OVERVIEW_CONTENTS_MAX_URLS: "1"
+      - LITERATURE_DEEP_FIRECRAWL_TIMEOUT_MS: "30000"
+      - LITERATURE_DEEP_FIRECRAWL_CONTENTS_TIMEOUT_MS: "12000"
+      - LITERATURE_DEEP_FIRECRAWL_CONTENTS_MAX_URLS: "5"
+      - LITERATURE_DEEP_FIRECRAWL_MAX_SEARCHES: "3"
+      - LITERATURE_DEEP_FIRECRAWL_WINDOW: "60"
+      - FIRECRAWL_SEARCH_CONCURRENCY: "2"
+      - FIRECRAWL_CONTENTS_CONCURRENCY: "2"
+      - FIRECRAWL_CONTENTS_TOTAL_TIMEOUT_MS: "12000"
+      - FIRECRAWL_CONTENTS_MAX_URLS: "8"
+      - FIRECRAWL_EUROPE_PMC_FULLTEXT_FALLBACK: "true"
+      - FIRECRAWL_EUROPE_PMC_FULLTEXT_MAX_URLS: "4"
+      - LITERATURE_FIRECRAWL_RERANKER: "deterministic"
+      - FIRECRAWL_RETRY_DELAY_MS: "750"
+      - FAST_CHAT_LLM_MODEL: "gemma-4-31b"
+      - FAST_CHAT_HYDE_PROVIDER: "cerebras"
+      - FAST_CHAT_HYDE_MODEL: "gemma-4-31b"
+      - FAST_CHAT_QUERY_REFORMULATE_PROVIDER: "cerebras"
+      - FAST_CHAT_QUERY_REFORMULATE_MODEL: "gemma-4-31b"
+      - FAST_CHAT_RERANK_PROVIDER: "cerebras"
+      - FAST_CHAT_RERANK_MODEL: "gemma-4-31b"
+      - LITERATURE_HYDE_ENABLED: "true"
       # V4.1 Flash thinks at high effort by default; low answers sooner (trial on staging).
       - DEEPSEEK_REASONING_EFFORT: "low"
     secrets:
@@ -59,6 +87,8 @@ containers:
       - TINFOIL_API_KEY
       - NVIDIA_API_KEY
       - FIRECRAWL_API_KEY
+      # The previous app's literature helper model (query recovery, HyDE), as in its production.
+      - CEREBRAS_API_KEY
       # Table analysis (analyze_table): the same remote service production uses
       - DATA_ANALYSIS_API_URL
       - DATA_ANALYSIS_API_KEY
