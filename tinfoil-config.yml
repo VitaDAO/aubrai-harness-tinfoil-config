@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.11.7@sha256:fccc4f16827475c84dc2d864b1de2e454b0010664dcb06045ea74a1953896aee"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.11.8@sha256:7221cb6ecf9e4f6b36fff5d65338f3a5bcf5889e1d1f7e082ad5b56f5f34bfad"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
@@ -27,6 +27,8 @@ containers:
       - AUBRAI_RUN_BUDGET: "extended"
       # Conversations run at once across all accounts; more wait in the queue.
       - AUBRAI_WORKER_CONCURRENCY: "6"
+      # Production's database is shared with the previous app; the harness lives in its own schema.
+      - DATABASE_SCHEMA: "harness"
       - ALLOWED_ORIGINS: "https://staging.aubr.ai,https://aubrai-harness-staging.vercel.app"
       # Public Privy application id (also embedded in every browser bundle).
       - PRIVY_APP_ID: "cmb5myawn00wkjm0m1o77894v"
