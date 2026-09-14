@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.14.3@sha256:811d06653b8185d7f44e35cc99dc6f916ea70d59964d111a8fdd82c60c344009"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.14.4@sha256:88b474cf68e8e319e7a1b3f9c11815ae5ecbffbd362a263731e30ceb714e0f50"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
@@ -105,6 +105,7 @@ shim:
     - /health
     - /auth/*
     - /v1/*
-    # The previous Aubrai API's routes (apps/api/src/legacy-api.ts).
+    # The previous Aubrai API's routes (apps/api/src/legacy-*.ts), including the Genome/x402 form routes.
     - /api/*
     - /agents/*
+    - /deep-research/*
