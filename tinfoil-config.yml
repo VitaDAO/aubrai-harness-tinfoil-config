@@ -105,3 +105,6 @@ shim:
     - /health
     - /auth/*
     - /v1/*
+    # The previous Aubrai API's routes (apps/api/src/legacy-api.ts).
+    - /api/*
+    - /agents/*
