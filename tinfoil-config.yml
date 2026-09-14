@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.14.9@sha256:8f373065ee5cd51c4f32d5c19ab4edaab59509846df2b46bd84740d17260e1b1"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.14.10@sha256:4770a4f2adb64773b94ffed3d006c85be0d150a2c54078891bd5e40d1ceeffc4"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
@@ -67,9 +67,13 @@ containers:
       # Private runs may search the literature (Firecrawl, PubMed); the query leaves the enclave for those
       # services, answers stay sealed. Owner's decision for staging, 2026-09-14.
       - AUBRAI_PRIVATE_LITERATURE: "true"
-      # Private literature answers on DeepSeek Flash (owner's decision for staging, 2026-09-14): the question
-      # and papers go to DeepSeek in plaintext; stored content and the caller's result stay sealed.
-      - AUBRAI_PRIVATE_LITERATURE_PROVIDER: "deepseek-flash"
+      # Literature jobs, normal and private, answer on Cerebras Qwen 3.8 27B (owner's decision for staging,
+      # 2026-09-14). A private job's question and papers go to Cerebras in plaintext; stored content and
+      # the caller's result stay sealed. Qwen reasons at length by default, so reasoning is off.
+      - AUBRAI_LITERATURE_PROVIDER: "cerebras"
+      - AUBRAI_PRIVATE_LITERATURE_PROVIDER: "cerebras"
+      - CEREBRAS_MODEL: "qwen-3.8-27b"
+      - CEREBRAS_REASONING_EFFORT: "none"
       # V4.1 Flash thinks at high effort by default; low answers sooner (trial on staging).
       - DEEPSEEK_REASONING_EFFORT: "low"
     secrets:
