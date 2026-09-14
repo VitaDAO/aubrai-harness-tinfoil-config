@@ -11,7 +11,7 @@ memory: 8192
 containers:
   - name: aubrai
     # Pinned by the runbook after `.github/workflows/tinfoil-deploy.yml` prints the digest.
-    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.14.7@sha256:6f5d860c68d80b6c3ca1283f8787015ca71ec4d4bb345898446d03924026d3c2"
+    image: "ghcr.io/vitadao/aubrai-harness:tinfoil-v2026.09.14.8@sha256:19b6e5ae798412b70eb80d9d1c859afba41e46fc7ece52aa9a12e22f5411981a"
     registry:
       username: DobrinAlexandru
       password_secret: GHCR_TOKEN
@@ -64,6 +64,9 @@ containers:
       - FAST_CHAT_RERANK_PROVIDER: "cerebras"
       - FAST_CHAT_RERANK_MODEL: "gemma-4-31b"
       - LITERATURE_HYDE_ENABLED: "true"
+      # Private runs may search the literature (Firecrawl, PubMed); the query leaves the enclave for those
+      # services, answers stay sealed. Owner's decision for staging, 2026-09-14.
+      - AUBRAI_PRIVATE_LITERATURE: "true"
       # V4.1 Flash thinks at high effort by default; low answers sooner (trial on staging).
       - DEEPSEEK_REASONING_EFFORT: "low"
     secrets:
